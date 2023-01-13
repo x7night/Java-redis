@@ -21,7 +21,7 @@ public class RequestHandler {
         return instance;
     }
 
-    public void handel(RedisClient client) throws IOException {
+    public void handel(RedisClient client) throws Exception {
 //        // 读入输入缓冲区
 //        readToClientQueryBuf(client);
 //        client.setQueryBuffer(readToSDS(client.getSocketChannel()));
@@ -44,17 +44,19 @@ public class RequestHandler {
         try{
             readToClientQueryBuf(client);
         }catch (IOException e){
-            RedisServer.CLIENTS.remove(client.getSocketChannel());
-            client.getSocketChannel().keyFor(RedisServer.selector).cancel();
-            client.getSocketChannel().close();
-            return;
+            throw new RuntimeException(e);
         }
         // 解析缓冲区
         while(Decoder.parser(client) > 0){
             // 获取命令
             client.setCmd(CommandFinder.find(client.getArgv()[0]));
             // 执行
-            client.exec();
+            try{
+                client.exec();
+            }catch (Exception e){
+                System.out.println("exec fail:" + e.getMessage());
+                throw new RuntimeException(e);
+            }
             // 返回结果
             try {
                 System.out.println("reply:"+client.getOutput());

@@ -8,7 +8,7 @@ import org.example.handler.RequestHandler;
 
 @Data
 @Builder
-public class FileEvent {
+public class FileEvent{
 
     /**
      * 事件类型

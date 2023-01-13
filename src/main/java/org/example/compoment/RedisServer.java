@@ -148,15 +148,22 @@ public class RedisServer {
     private void handleFileEvent() {
         long start = System.currentTimeMillis();
         while (queue.size() > 0 && System.currentTimeMillis() - start < 500) {
+            FileEvent event = queue.poll();
             try {
-                FileEvent event = queue.poll();
                 if (SelectionKey.OP_READ == event.getEventType()) {
                     event.getRequestHandler().handel(event.getClient());
                 } else if (SelectionKey.OP_WRITE == event.getEventType()) {
                     event.getReplyHandler().handel(event.getClient());
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            } catch (Exception e) {
+                CLIENTS.remove(event.getClient().getSocketChannel());
+                event.getClient().getSocketChannel().keyFor(RedisServer.selector).cancel();
+                try {
+                    event.getClient().getSocketChannel().close();
+                } catch (IOException ignored) {
+
+                }
+                System.out.println("file event process fail:"+e.getMessage());
             }
         }
     }
