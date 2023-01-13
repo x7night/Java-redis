@@ -30,8 +30,8 @@ public class StringSetOperation extends StringOperation {
 
     @Override
     public boolean exec(RedisClient client) {
-        RedisObject data = new RedisObject(RedisObjectType.STRING, DataType.SDS, new SDS(client.getArgv()[2]));
-        client.getDb().getData().put(client.getArgv()[1], data);
+        RedisObject<SDS> data = new RedisObject(RedisObjectType.STRING, DataType.SDS, new SDS(client.getArgv()[2]));
+        client.getDb().put(client.getArgv()[1], data);
         client.setOutput(ExecuteResult.OK.getValue());
         return true;
     }

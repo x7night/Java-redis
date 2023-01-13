@@ -27,13 +27,7 @@ public class StringGetOperation extends StringOperation {
     @Override
     public boolean exec(RedisClient client) {
         RedisObject res = client.getDb()
-                .getData()
-                .getOrDefault(client.getArgv()[1], RedisObject.NONE);
-        if(client.getDb().getExpires().containsKey(client.getArgv()[1])){
-            res = System.currentTimeMillis() > client.getDb().getExpires().get(client.getArgv()[1])?
-                    RedisObject.NONE:
-                    res;
-        }
+                .get(client.getArgv()[1]);
         client.setOutput(Encoder.encodeData(res));
         return true;
     }

@@ -19,13 +19,8 @@ public class ListGetOperation extends ListOperation {
 
     @Override
     public boolean exec(RedisClient client) {
-        RedisObject data = client.getDb().getData()
-                .getOrDefault(client.getArgv()[1], RedisObject.NONE);
-        if(client.getDb().getExpires().containsKey(client.getArgv()[1])){
-            data = System.currentTimeMillis() > client.getDb().getExpires().get(client.getArgv()[1])?
-                    RedisObject.NONE:
-                    data;
-        }
+        RedisObject data =  client.getDb()
+                .get(client.getArgv()[1]);
         client.setOutput(Encoder.encodeData(data));
         return true;
     }

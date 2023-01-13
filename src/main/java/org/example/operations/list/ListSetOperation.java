@@ -24,10 +24,10 @@ public class ListSetOperation extends ListOperation {
 
     @Override
     public boolean exec(RedisClient client) {
-        RedisObject data = new RedisObject(RedisObjectType.LIST,
+        RedisObject<List> data = new RedisObject(RedisObjectType.LIST,
                 DataType.LINKED_LIST,
                 new LinkedList<>(List.of(Arrays.copyOfRange(client.getArgv(), 2, client.getArgv().length))));
-        client.getDb().getData()
+        client.getDb()
                 .put(client.getArgv()[1], data);
         client.setOutput(ExecuteResult.OK.getValue());
         return true;

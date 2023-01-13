@@ -1,6 +1,7 @@
 package org.example.operations.expire;
 
 import org.example.compoment.RedisClient;
+import org.example.compoment.RedisObject;
 import org.example.enums.RedisObjectType;
 import org.example.operations.Operation;
 
@@ -19,9 +20,10 @@ public class ExpireOperation extends Operation {
 
     @Override
     public boolean exec(RedisClient client) {
-        if(client.getDb().getData().containsKey(client.getArgv()[1])){
+        RedisObject key = client.getDb().getKey(client.getArgv()[1]);
+        if(null != key){
             long expireTime = Long.valueOf(client.getArgv()[2])*1000 + System.currentTimeMillis();
-            client.getDb().getExpires().put(client.getArgv()[1], expireTime);
+            client.getDb().getExpires().put(key, expireTime);
             client.setOutput(":1\r\n");
         }else{
             client.setOutput(":0\r\n");
