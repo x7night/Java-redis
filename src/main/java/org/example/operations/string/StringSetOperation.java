@@ -10,7 +10,7 @@ import org.example.enums.DataType;
 import org.example.enums.RedisObjectType;
 import org.example.enums.ExecuteResult;
 
-@Command
+@Command("set")
 public class StringSetOperation extends StringOperation {
     private final static String NAME = "set";
 

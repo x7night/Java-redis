@@ -52,6 +52,13 @@ public class Database {
         }
     }
 
+    /**删除键并向集群传播
+     * @return
+     */
+    private void deleteKeyAndPropagate(){
+
+    }
+
 //    static class StringObject extends RedisObject<SDS>{
 //        StringObject(){
 //            super(RedisObjectType.STRING, null, new SDS());

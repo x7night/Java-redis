@@ -1,5 +1,6 @@
 package org.example.operations.list;
 
+import org.example.annotation.Command;
 import org.example.compoment.RedisClient;
 import org.example.compoment.RedisObject;
 import org.example.enums.DataType;
@@ -9,9 +10,9 @@ import org.example.enums.ExecuteResult;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
+@Command("lset")
 public class ListSetOperation extends ListOperation {
-    private static final String NAME = "lset";
+    private String NAME = "lset";
 
     @Override
     public boolean beforeExec(RedisClient client) {

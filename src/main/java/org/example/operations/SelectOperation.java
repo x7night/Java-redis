@@ -5,7 +5,7 @@ import org.example.enums.RedisObjectType;
 import org.example.enums.ExecuteResult;
 import org.example.compoment.RedisClient;
 import org.example.compoment.RedisServer;
-@Command
+@Command("select")
 public class SelectOperation extends Operation {
     private static final String NAME = "select";
     @Override

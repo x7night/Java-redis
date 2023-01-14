@@ -1,12 +1,13 @@
 package org.example.operations.config;
 
+import org.example.annotation.Command;
 import org.example.compoment.RedisClient;
 import org.example.enums.RedisObjectType;
 import org.example.operations.Operation;
 
 import java.util.HashMap;
 import java.util.Map;
-
+@Command("config")
 public class ConfigOperation extends Operation {
     private static final String NAME = "config";
 

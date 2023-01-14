@@ -1,5 +1,6 @@
 package org.example.compoment;
 
+import cn.hutool.core.io.FileUtil;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.App;
@@ -55,7 +56,6 @@ public class RedisServer {
         aofFile = Files.newBufferedWriter(path,
                 StandardCharsets.UTF_8,
                 StandardOpenOption.APPEND);
-
         // 初始化存储
         for (int i = 0; i < 8; i++) {
             dbs.add(new Database());

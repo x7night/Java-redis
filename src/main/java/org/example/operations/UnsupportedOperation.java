@@ -1,9 +1,10 @@
 package org.example.operations;
 
+import org.example.annotation.Command;
 import org.example.compoment.RedisClient;
 import org.example.enums.RedisObjectType;
 import org.example.enums.ExecuteResult;
-
+@Command("unsupported")
 public class UnsupportedOperation extends Operation {
     private static final String NAME = "unsupported operation";
 

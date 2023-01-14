@@ -6,7 +6,7 @@ import org.example.compoment.RedisObject;
 import org.example.enums.ExecuteResult;
 import org.example.util.Encoder;
 
-@Command
+@Command("get")
 public class StringGetOperation extends StringOperation {
     private final static String NAME = "get";
 

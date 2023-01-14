@@ -1,10 +1,12 @@
 package org.example.operations.list;
 
+import org.example.annotation.Command;
 import org.example.compoment.RedisClient;
 import org.example.compoment.RedisObject;
 import org.example.enums.ExecuteResult;
 import org.example.util.Encoder;
 
+@Command("lget")
 public class ListGetOperation extends ListOperation {
     private static final String NAME = "lget";
 

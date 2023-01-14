@@ -1,7 +1,9 @@
 package org.example;
 
+import org.example.command.CommandFinder;
 import org.example.compoment.RedisServer;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +16,7 @@ public class App {
     public static void main(String[] args) {
         try {
             // 加载命令类
-
+            CommandFinder.init();
 
             RedisServer server = new RedisServer();
             ExecutorService executor = Executors.newSingleThreadExecutor();

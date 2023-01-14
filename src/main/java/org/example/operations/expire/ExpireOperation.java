@@ -1,10 +1,11 @@
 package org.example.operations.expire;
 
+import org.example.annotation.Command;
 import org.example.compoment.RedisClient;
 import org.example.compoment.RedisObject;
 import org.example.enums.RedisObjectType;
 import org.example.operations.Operation;
-
+@Command("expire")
 public class ExpireOperation extends Operation {
     private static final String NAME = "expire";
 
