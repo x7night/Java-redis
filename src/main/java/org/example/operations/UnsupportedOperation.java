@@ -6,16 +6,11 @@ import org.example.enums.RedisObjectType;
 import org.example.enums.ExecuteResult;
 @Command("unsupported")
 public class UnsupportedOperation extends Operation {
-    private static final String NAME = "unsupported operation";
+    private final String name = "unsupported operation";
 
     @Override
     public RedisObjectType getDataType() {
         return RedisObjectType.NONE;
-    }
-
-    @Override
-    public String getOperationName() {
-        return NAME;
     }
 
     @Override

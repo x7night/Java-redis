@@ -6,6 +6,7 @@ import org.example.enums.RedisObjectType;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 编码数据
@@ -41,8 +42,22 @@ public class Encoder {
                     res.append(entry.getValue()).append(CRLF);
                 }
                 return res.toString();
+            case HASH_SET:
+                res = new StringBuffer();
+                Set<String> set = (Set) obj.getData();
+                res.append("*").append(set.size()).append(CRLF);
+                for (String s : set) {
+                    res.append("$").append(s.length()).append(CRLF);
+                }
+                return res.toString();
             default:
                 return "+" + ((SDS) obj.getData()).toString() + CRLF;
         }
+    }
+
+    public String encodeCommand(String[] args){
+        StringBuffer commandStr = new StringBuffer();
+
+        return commandStr.toString();
     }
 }

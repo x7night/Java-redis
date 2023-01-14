@@ -8,7 +8,7 @@ import org.example.util.Encoder;
 
 @Command("lget")
 public class ListGetOperation extends ListOperation {
-    private static final String NAME = "lget";
+    private final String name = "lget";
 
     @Override
     public boolean beforeExec(RedisClient client) {
@@ -32,8 +32,4 @@ public class ListGetOperation extends ListOperation {
         return true;
     }
 
-    @Override
-    public String getOperationName() {
-        return NAME;
-    }
 }

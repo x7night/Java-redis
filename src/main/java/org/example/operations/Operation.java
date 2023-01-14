@@ -17,7 +17,7 @@ public abstract class Operation implements RedisCommand {
     /**
      * 操作名称
      */
-    String NAME;
+    String name;
     /**
      * 获取操作数据类型
      * @return 操作数据类型
@@ -27,7 +27,7 @@ public abstract class Operation implements RedisCommand {
      * 获取操作名称
      * @return 操作名
      */
-    public String getOperationName(){return NAME;}
+    public String getOperationName(){return name;}
 
     public abstract boolean beforeExec(RedisClient client);
 

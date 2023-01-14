@@ -9,11 +9,12 @@ import java.util.HashMap;
 import java.util.Map;
 @Command("client")
 public class ClientOperation extends Operation {
-    private static final String NAME = "client";
+    private final String name = "client";
 
-    static final Map<String, Operation> CLIENT_OPERATIONS = new HashMap<>();
-    static {
-        CLIENT_OPERATIONS.put("setname", new ClientSetNameOperation());
+    private final Map<String, Operation> clientOperations = new HashMap<>();
+
+    public ClientOperation() {
+        clientOperations.put("setname", new ClientSetNameOperation());
     }
 
 
@@ -23,22 +24,17 @@ public class ClientOperation extends Operation {
     }
 
     @Override
-    public String getOperationName() {
-        return NAME;
-    }
-
-    @Override
     public boolean beforeExec(RedisClient client) {
-        return CLIENT_OPERATIONS.get(client.getArgv()[1]).beforeExec(client);
+        return clientOperations.get(client.getArgv()[1]).beforeExec(client);
     }
 
     @Override
     public boolean exec(RedisClient client) {
-        return CLIENT_OPERATIONS.get(client.getArgv()[1]).exec(client);
+        return clientOperations.get(client.getArgv()[1]).exec(client);
     }
 
     @Override
     public boolean afterExec(RedisClient client) {
-        return CLIENT_OPERATIONS.get(client.getArgv()[1]).afterExec(client);
+        return clientOperations.get(client.getArgv()[1]).afterExec(client);
     }
 }

@@ -2,11 +2,17 @@ package org.example.operations.config;
 
 import org.example.compoment.RedisClient;
 import org.example.compoment.RedisServer;
-import org.example.enums.ExecuteResult;
-import org.example.operations.client.ClientOperation;
+import org.example.enums.RedisObjectType;
+import org.example.operations.Operation;
 
-public class ConfigGetOperation extends ClientOperation {
+public class ConfigGetOperation extends Operation {
     private int argNum = 3;
+
+    @Override
+    public RedisObjectType getDataType() {
+        return null;
+    }
+
     @Override
     public boolean beforeExec(RedisClient client) {
         return argNum == client.getArgv().length;

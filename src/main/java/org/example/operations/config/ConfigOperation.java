@@ -9,13 +9,13 @@ import java.util.HashMap;
 import java.util.Map;
 @Command("config")
 public class ConfigOperation extends Operation {
-    private static final String NAME = "config";
+    private final String name = "config";
 
-    static final Map<String, Operation> CLIENT_OPERATIONS = new HashMap<>();
-    static {
-        CLIENT_OPERATIONS.put("get", new ConfigGetOperation());
+    final Map<String, Operation> configOperations = new HashMap<>();
+
+    public ConfigOperation() {
+        configOperations.put("get", new ConfigGetOperation());
     }
-
 
     @Override
     public RedisObjectType getDataType() {
@@ -23,22 +23,17 @@ public class ConfigOperation extends Operation {
     }
 
     @Override
-    public String getOperationName() {
-        return NAME;
-    }
-
-    @Override
     public boolean beforeExec(RedisClient client) {
-        return CLIENT_OPERATIONS.get(client.getArgv()[1]).beforeExec(client);
+        return configOperations.get(client.getArgv()[1]).beforeExec(client);
     }
 
     @Override
     public boolean exec(RedisClient client) {
-        return CLIENT_OPERATIONS.get(client.getArgv()[1]).exec(client);
+        return configOperations.get(client.getArgv()[1]).exec(client);
     }
 
     @Override
     public boolean afterExec(RedisClient client) {
-        return CLIENT_OPERATIONS.get(client.getArgv()[1]).afterExec(client);
+        return configOperations.get(client.getArgv()[1]).afterExec(client);
     }
 }

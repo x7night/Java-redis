@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 @Command("lset")
 public class ListSetOperation extends ListOperation {
-    private String NAME = "lset";
+    private String name = "lset";
 
     @Override
     public boolean beforeExec(RedisClient client) {
@@ -39,8 +39,4 @@ public class ListSetOperation extends ListOperation {
         return true;
     }
 
-    @Override
-    public String getOperationName() {
-        return NAME;
-    }
 }

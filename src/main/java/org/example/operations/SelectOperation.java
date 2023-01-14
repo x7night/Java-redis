@@ -7,15 +7,10 @@ import org.example.compoment.RedisClient;
 import org.example.compoment.RedisServer;
 @Command("select")
 public class SelectOperation extends Operation {
-    private static final String NAME = "select";
+    private final String name = "select";
     @Override
     public RedisObjectType getDataType() {
         return RedisObjectType.NONE;
-    }
-
-    @Override
-    public String getOperationName() {
-        return NAME;
     }
 
     @Override

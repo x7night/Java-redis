@@ -7,7 +7,7 @@ import org.example.enums.RedisObjectType;
 import org.example.operations.Operation;
 @Command("expire")
 public class ExpireOperation extends Operation {
-    private static final String NAME = "expire";
+    private final String name = "expire";
 
     @Override
     public RedisObjectType getDataType() {

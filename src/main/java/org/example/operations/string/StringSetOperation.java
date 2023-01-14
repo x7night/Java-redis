@@ -12,12 +12,7 @@ import org.example.enums.ExecuteResult;
 
 @Command("set")
 public class StringSetOperation extends StringOperation {
-    private final static String NAME = "set";
-
-    @Override
-    public String getOperationName() {
-        return NAME;
-    }
+    private final String name = "set";
 
     @Override
     public boolean beforeExec(RedisClient client) {
@@ -40,7 +35,16 @@ public class StringSetOperation extends StringOperation {
     public boolean afterExec(RedisClient client) {
         RedisServer server = (RedisServer) App.CONTEXT.get("server");
         if(server.isSyncAOF()){
-            server.getAofBuf().append(client.getQueryBuffer().toCharArray()).append("\n");
+            int len = client.getArgv().length;
+            if (len != 0) {
+                server.getAofBuf().append("*").append(len).append("\r\n");
+                for (int i = 1; i < len; i++) {
+                    server.getAofBuf()
+                            .append("$").append(client.getArgv()[i].length()).append("\r\n")
+                            .append(client.getArgv()[i]).append("\r\n");
+
+                }
+            }
         }
         return true;
     }

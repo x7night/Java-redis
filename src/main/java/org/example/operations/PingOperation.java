@@ -5,7 +5,7 @@ import org.example.compoment.RedisClient;
 import org.example.enums.RedisObjectType;
 @Command("ping")
 public class PingOperation extends Operation{
-    private final String NAME = "ping";
+    private String name = "ping";
     @Override
     public RedisObjectType getDataType() {
         return RedisObjectType.NONE;

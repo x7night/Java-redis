@@ -1,16 +1,9 @@
 package org.example.datastruct;
 
-import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.val;
 import org.example.compoment.RedisObject;
-import org.example.enums.OperationType;
 import org.example.enums.RedisObjectType;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * 数据存储结构
@@ -19,15 +12,16 @@ import java.util.Objects;
 @NoArgsConstructor
 public class Database {
     private final static RedisObject<SDS> KEY = new RedisObject<>(RedisObjectType.STRING, null, new SDS());
-    private DataDict dataMap = new DataDict();
 
-    private Map<RedisObject, Long> expires = new HashMap<>();
+    private Dict<RedisObject> dataMap = new Dict<>();
 
-    public RedisObject getKey(String key) {
+    private Dict<Long> expires = new Dict<>();
+
+    public RedisObject<SDS> getKey(String key) {
         KEY.getData().clear();
         KEY.getData().append(key);
-        RedisObject realKey = null;
-        for (RedisObject redisObject : dataMap.keySet()) {
+        RedisObject<SDS> realKey = null;
+        for (RedisObject<SDS> redisObject : dataMap.keySet()) {
             if (KEY.equals(redisObject)) {
                 realKey = redisObject;
                 break;
@@ -39,7 +33,7 @@ public class Database {
         return realKey;
     }
 
-    private boolean expireIfNeeded(RedisObject key) {
+    private boolean expireIfNeeded(RedisObject<SDS> key) {
         Long expireTime = expires.get(key);
         if (expireTime == null) {
             return false;
@@ -77,7 +71,7 @@ public class Database {
 //        }
 //    }
 
-    public RedisObject put(String key, RedisObject value) {
+    public <T> RedisObject put(String key, RedisObject<T> value) {
         RedisObject<SDS> k = getKey(key);
         k = null != k ? k :
                 new RedisObject<>(RedisObjectType.STRING, null, new SDS(key));
@@ -85,12 +79,12 @@ public class Database {
     }
 
     public RedisObject get(String key) {
-        RedisObject k = getKey(key);
+        RedisObject<SDS> k = getKey(key);
         return null == k ? RedisObject.NONE : dataMap.getOrDefault(k, RedisObject.NONE);
     }
 
     public RedisObject getOrDefault(String key, RedisObject defaultValue) {
-        RedisObject k = getKey(key);
+        RedisObject<SDS> k = getKey(key);
         return null == k ? RedisObject.NONE : dataMap.getOrDefault(k, defaultValue);
     }
 }

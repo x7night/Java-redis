@@ -1,15 +1,13 @@
-package org.example.operations.string;
+package org.example.operations.hash;
 
-import org.example.compoment.RedisClient;
 import org.example.annotation.Command;
+import org.example.compoment.RedisClient;
 import org.example.compoment.RedisObject;
 import org.example.enums.ExecuteResult;
 import org.example.util.Encoder;
-
-@Command("get")
-public class StringGetOperation extends StringOperation {
-    private final String name = "get";
-
+@Command("hget")
+public class HashGetOperation extends HashOperation{
+    private final String name = "hget";
     @Override
     public boolean beforeExec(RedisClient client) {
         if(client.getArgv().length != 2){
@@ -21,9 +19,9 @@ public class StringGetOperation extends StringOperation {
 
     @Override
     public boolean exec(RedisClient client) {
-        RedisObject res = client.getDb()
+        RedisObject data =  client.getDb()
                 .get(client.getArgv()[1]);
-        client.setOutput(Encoder.encodeData(res));
+        client.setOutput(Encoder.encodeData(data));
         return true;
     }
 
@@ -31,5 +29,4 @@ public class StringGetOperation extends StringOperation {
     public boolean afterExec(RedisClient client) {
         return true;
     }
-
 }

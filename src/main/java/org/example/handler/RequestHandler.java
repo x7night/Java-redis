@@ -2,10 +2,9 @@ package org.example.handler;
 
 import org.example.command.CommandFinder;
 import org.example.compoment.RedisClient;
-import org.example.compoment.RedisServer;
+import org.example.datastruct.SDS;
 import org.example.util.Decoder;
 import org.example.util.Utils;
-import org.example.datastruct.SDS;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -16,9 +15,10 @@ import java.nio.channels.SocketChannel;
  * 命令请求处理器
  */
 public class RequestHandler {
-    private static RequestHandler instance = new RequestHandler();
-    public static RequestHandler getInstance(){
-        return instance;
+    private final static RequestHandler INSTANCE = new RequestHandler();
+
+    public static RequestHandler getInstance() {
+        return INSTANCE;
     }
 
     public void handel(RedisClient client) throws Exception {
@@ -41,9 +41,9 @@ public class RequestHandler {
 //            throw new RuntimeException(e);
 //        }
         // 读入输入缓冲区
-        try{
+        try {
             readToClientQueryBuf(client);
-        }catch (IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
         // 解析缓冲区
@@ -68,14 +68,14 @@ public class RequestHandler {
     }
 
     private void readToClientQueryBuf(RedisClient c) throws IOException {
-        if(null != c.getQueryBuffer()){
+        if (null != c.getQueryBuffer()) {
             ByteBuffer buf = ByteBuffer.allocate(32);
             int rem = c.getSocketChannel().read(buf);
-            while(rem > 0){
+            while (rem > 0) {
                 c.getQueryBuffer().append(buf, rem);
                 rem = c.getSocketChannel().read(buf);
             }
-        }else{
+        } else {
             c.setQueryBuffer(readToSDS(c.getSocketChannel()));
         }
 
@@ -87,12 +87,12 @@ public class RequestHandler {
         if (!buf.hasRemaining()) {
             SDS sds = new SDS(buf, Utils.minPowFor(n));
             int rem = c.read(buf);
-            while(rem > 0){
+            while (rem > 0) {
                 sds.append(buf, rem);
                 rem = c.read(buf);
             }
             return sds;
-        }else{
+        } else {
             return new SDS(buf, Utils.minPowFor(n));
         }
     }
