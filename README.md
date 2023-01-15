@@ -8,5 +8,12 @@
 - get 
 - lset
 - lget
+- hset
+- hgetall
+- sadd
+- smembers
+- zadd
+- zrange(only support: "zrange myzset 0 1" or "zrange myzset 0 1 byscore")
 - expire
+- del
 
