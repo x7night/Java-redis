@@ -87,4 +87,12 @@ public class Database {
         RedisObject<SDS> k = getKey(key);
         return null == k ? RedisObject.NONE : dataMap.getOrDefault(k, defaultValue);
     }
+
+    public RedisObject remove(String key){
+        RedisObject<SDS> k = getKey(key);
+        if (k != null) {
+            return dataMap.remove(k);
+        }
+        return RedisObject.NONE;
+    }
 }

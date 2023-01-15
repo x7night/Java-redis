@@ -5,9 +5,9 @@ import org.example.compoment.RedisClient;
 import org.example.compoment.RedisObject;
 import org.example.enums.ExecuteResult;
 import org.example.util.Encoder;
-@Command("hget")
-public class HashGetOperation extends HashOperation{
-    private final String name = "hget";
+@Command("hgetall")
+public class HashGetAllOperation extends HashOperation{
+    private final String name = "hgetall";
     @Override
     public boolean beforeExec(RedisClient client) {
         if(client.getArgv().length != 2){
