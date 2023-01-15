@@ -29,7 +29,7 @@ public class HashSetOperation extends HashOperation{
         }
         RedisObject<Map<String, String>> data = new RedisObject<>(RedisObjectType.HASH, DataType.HASH_MAP, map);
         client.getDb().put(client.getArgv()[1], data);
-        return false;
+        return true;
     }
 
     @Override
